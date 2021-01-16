@@ -1,5 +1,4 @@
 <?php
-
   require 'mdb_connection.php';
   require 'oop.php';
   $mdb = mdb_connect();
