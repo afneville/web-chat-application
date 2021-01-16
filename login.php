@@ -1,14 +1,15 @@
 <?php
 
   require 'mdb_connection.php';
+  require 'oop.php';
   $mdb = mdb_connect();
 
   $username = $password = "";
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    $username = htmlentities($_POST["username"]);
+    $password = htmlentities($_POST["password"]);
     $query = "SELECT id, salt, password FROM user WHERE username = '$username'";
     $result = $mdb->query($query);
     if ($result->num_rows > 0) {
@@ -19,14 +20,16 @@
         if ($hash == $record["password"]) {
 
             session_start();
-            $_SESSION["name"] = "$username";
-            $_SESSION["id"] = $record["id"];
+            $id = $record["id"];
+            $current_user = new User("$username", "$id");
+            $_SESSION["object"] = $current_user;
             header ("Location: home.php");
             exit;
 
         }
 
     }
+    $result->close();
     $error = "Username or Password incorrect";
   }
   mdb_disconnect($mdb);

@@ -1,9 +1,8 @@
 <?php
-
+    
+    require 'oop.php';
     session_start();
-    $name = $_SESSION["name"];
-    $id = $_SESSION["id"];
-
+    $current_user = $_SESSION['object'];
 
 ?>
 
@@ -16,7 +15,7 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-    <h1>Welcome to your home, <?php echo "$name" ?>.</h1>
-    <h2>Your id is: <?php echo "$id"?></h2>
+    <h1>Welcome to your home, <?php echo $current_user->get_username(); ?>.</h1>
+    <h2>Your id is: <?php echo $current_user->get_id(); ?></h2>
 </body>
 </html>

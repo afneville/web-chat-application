@@ -1,6 +1,7 @@
 <?php
 
   require 'mdb_connection.php';
+  require 'oop.php';
   $mdb = mdb_connect();
 
   $username = $password = $username_error = $password_error = "";
@@ -22,8 +23,8 @@
 
     $Submission = $_POST["Submission"];
 
-    $username = validate($_POST["username"]);
-    $password = validate($_POST["password"]);
+    $username = validate(htmlentities($_POST["username"]));
+    $password = validate(htmlentities($_POST["password"]));
     if (strlen($username) == 0) {
     
       $username_error = "Invalid username";
@@ -46,23 +47,24 @@
         
         $username_error = "username already taken";
         $success = false;
-
       } 
+      $result->close();
 
     }
 
 
     if ($success) {
 
-      session_start();
-      $_SESSION["name"] = "$username";
-      $salt = rand();
-      $hash = hash('sha256', $password.$salt);
-      $query = "INSERT INTO user (username, password, salt) VALUES ('$username', '$hash', '$salt')";
-      $mdb->query($query);
-      $_SESSION["id"] = $mdb->insert_id;
-      header ("Location: home.php");
-      exit;
+        session_start();
+        $salt = rand();
+        $hash = hash('sha256', $password.$salt);
+        $query = "INSERT INTO user (username, password, salt) VALUES ('$username', '$hash', '$salt')";
+        $mdb->query($query);
+        $id = $mdb->insert_id;
+        $current_user = new User("$username", "$id");
+        $_SESSION['object'] = $current_user;
+        header ("Location: home.php");
+        exit;
     }
   }
   mdb_disconnect($mdb);
