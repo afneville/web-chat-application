@@ -62,6 +62,21 @@ class User {
     function get_chat_rooms() {
 
         $query = "SELECT chat_room_id FROM chat_user WHERE user_id='$this->id'";
+        $mdb = $GLOBALS["mdb"];
+        $chat_rooms = array();
+        $result = $mdb->query($query);
+        if ($result->num_rows > 0 ) {
+
+            while ($record = $result->fetch_assoc()) {
+
+                $current_id = $record["chat_room_id"];
+                $index = new Chat($current_id);
+                array_push($chat_rooms, $index);
+
+            }
+        }
+
+        return $chat_rooms;
     }
 
 }
