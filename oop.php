@@ -35,7 +35,7 @@ class User {
         $query = "INSERT INTO chat_room (name, pin) VALUES ('$chat_room_name', '$pin')";
         $mdb = $GLOBALS["mdb"];
         $mdb->query($query);
-        $id = $this->mdb->insert_id;
+        $id = $mdb->insert_id;
         $query = "INSERT INTO chat_user (user_id, chat_room_id, approved, chat_owner, chat_admin) VALUES ('$this->id', '$id', '1', '1', '1')";
         $mdb->query($query);
     } 
@@ -59,13 +59,17 @@ class User {
         return $return_value;
     }
 
+    function get_chat_rooms() {
+
+        $query = "SELECT chat_room_id FROM chat_user WHERE user_id='$this->id'";
+    }
+
 }
 
 class Chat {
 
     private $id;
     private $chat_room_name;
-    private $messages = array();
 
     function __construct($id) {
 
@@ -80,6 +84,7 @@ class Chat {
     function get_messages() {
 
         $query = "SELECT owner_id, time_stamp, message_text FROM message WHERE chat_room_id='$this->id'";
+        $messages = array();
         $mdb = $GLOBALS["mdb"];
         $result = $mdb->query($query);
         if ($result->num_rows > 0 ) {
@@ -88,20 +93,21 @@ class Chat {
 
                 $index = array();
                 array_push($index, $record["owner_id"], $record["time_stamp"], $record["message_text"]);
-                array_push($this->messages, $index);
+                array_push($messages, $index);
 
             }
             
         }
+        return $messages;
         
     }
     function get_name() {
 
-        return $this->name;
+        return $this->chat_room_name;
     }
     function get_members() {
 
-        $query = "SELECT username FROM user WHERE id IN (SELECT user_id FROM chat_user WHERE chat_room_id='1')";
+        $query = "SELECT username FROM user WHERE id IN (SELECT user_id FROM chat_user WHERE chat_room_id='$this->id')";
         $mdb = $GLOBALS["mdb"];
         $mdb->query($query);
     }
