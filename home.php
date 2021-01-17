@@ -6,7 +6,8 @@ $mdb = mdb_connect();
 session_start();
 $current_user = $_SESSION['object'];
 $current_user->send_message("1", "I logged in");
-
+//$current_user->create_chat_room("test2", "1234");
+//$current_user->send_message("2", "hello?");
 
 ?>
 
