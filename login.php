@@ -20,7 +20,7 @@
 
             session_start();
             $id = $record["id"];
-            $current_user = new User("$username", "$id");
+            $current_user = new User("$id");
             $_SESSION["object"] = $current_user;
             header ("Location: home.php");
             exit;

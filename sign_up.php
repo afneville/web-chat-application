@@ -61,7 +61,7 @@
         $query = "INSERT INTO user (username, password, salt) VALUES ('$username', '$hash', '$salt')";
         $mdb->query($query);
         $id = $mdb->insert_id;
-        $current_user = new User("$username", "$id");
+        $current_user = new User("$id");
         $_SESSION['object'] = $current_user;
         header ("Location: home.php");
         exit;

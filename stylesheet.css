@@ -11,3 +11,48 @@ body {
     color: red;
 
 }
+
+* {box-sizing: border-box}
+
+/* Style the tab */
+.tab_bar {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 30%;
+  height: 300px;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab_bar button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab_bar button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab_bar button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.chat_pane {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 70%;
+  border-left: none;
+  height: 300px;
+}

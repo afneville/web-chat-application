@@ -54,8 +54,8 @@ class User {
 
     function create_chat_room($chat_room_name, $pin) {
 
-        $query = "INSERT INTO chat_room (name, pin) VALUES ('$chat_room_name', '$pin')";
         $mdb = $GLOBALS["mdb"];
+        $query = "INSERT INTO chat_room (name, pin) VALUES ('$chat_room_name', '$pin')";
         $mdb->query($query);
         $id = $mdb->insert_id;
         $query = "INSERT INTO chat_user (user_id, chat_room_id, priviliges) VALUES ('$this->id', '$id', '3')";
@@ -115,13 +115,16 @@ class Chat {
         return $messages;
         
     }
+
     function get_name() {
 
         $mdb = $GLOBALS["mdb"];
         $query = "SELECT name FROM chat_room WHERE id='$this->id'";
         $record = ($mdb->query($query))->fetch_assoc();
         return $record["name"];
+
     }
+
     function get_id() {
 
         return $this->id;
@@ -158,10 +161,8 @@ class Message {
 
         $mdb = $GLOBALS["mdb"];
         $query = "SELECT message_text FROM message WHERE id='$this->id'";
-        $result = $mdb->query($query);
-        $record = $result->fetch_assoc();
-        $message_text = $record["message_text"];
-        return $message_text;
+        $record = ($mdb->query($query))->fetch_assoc();
+        return $record["message_text"];
 
     }
 
@@ -169,8 +170,7 @@ class Message {
 
         $mdb = $GLOBALS["mdb"];
         $query = "SELECT owner_id FROM message WHERE id='$this->id'";
-        $result = $mdb->query($query);
-        $record = $result->fetch_assoc();
+        $record = ($mdb->query($query))->fetch_assoc();
         return $record["owner_id"];
     }
 
@@ -178,10 +178,8 @@ class Message {
 
         $mdb = $GLOBALS["mdb"];
         $query = "SELECT time_stamp FROM message WHERE id='$this->id'";
-        $result = $mdb->query($query);
-        $record = $result->fetch_assoc();
-        $time_stamp = $record["time_stamp"];
-        return $time_stamp;
+        $record = ($mdb->query($query))->fetch_assoc();
+        return $record["time_stamp"];
 
     }
 }
