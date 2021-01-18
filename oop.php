@@ -4,11 +4,29 @@ class User {
     
     private $username;
     private $id;
+    private $chat_rooms = array();
 
-    function __construct($username, $id) {
+    function __construct($id) {
 
-        $this->username = $username;
         $this->id = $id;
+        $query = "SELECT username FROM user WHERE id='$this->id'";
+        $mdb = $GLOBALS["mdb"];
+        $result = $mdb->query($query);
+        $record = $result->fetch_assoc();
+        $this->username = $record["username"];
+        $query = "SELECT chat_room_id FROM chat_user WHERE user_id='$this->id'";
+        $result = $mdb->query($query);
+        if ($result->num_rows > 0 ) {
+
+            while ($record = $result->fetch_assoc()) {
+
+                $current_id = $record["chat_room_id"];
+                $index = new Chat($current_id);
+                array_push($this->chat_rooms, $index);
+
+            }
+        }
+
 
     }
 
@@ -36,8 +54,9 @@ class User {
         $mdb = $GLOBALS["mdb"];
         $mdb->query($query);
         $id = $mdb->insert_id;
-        $query = "INSERT INTO chat_user (user_id, chat_room_id, approved, chat_owner, chat_admin) VALUES ('$this->id', '$id', '1', '1', '1')";
+        $query = "INSERT INTO chat_user (user_id, chat_room_id, priviliges) VALUES ('$this->id', '$id', '3')";
         $mdb->query($query);
+
     } 
     function join_chat_room($chat_room_id, $pin) {
         
@@ -61,22 +80,7 @@ class User {
 
     function get_chat_rooms() {
 
-        $query = "SELECT chat_room_id FROM chat_user WHERE user_id='$this->id'";
-        $mdb = $GLOBALS["mdb"];
-        $chat_rooms = array();
-        $result = $mdb->query($query);
-        if ($result->num_rows > 0 ) {
-
-            while ($record = $result->fetch_assoc()) {
-
-                $current_id = $record["chat_room_id"];
-                $index = new Chat($current_id);
-                array_push($chat_rooms, $index);
-
-            }
-        }
-
-        return $chat_rooms;
+        return $this->chat_rooms;
     }
 
 }
@@ -85,6 +89,8 @@ class Chat {
 
     private $id;
     private $chat_room_name;
+    private $messages = array();
+    private $members = array();
 
     function __construct($id) {
 
@@ -94,26 +100,23 @@ class Chat {
         $result = $mdb->query($query);
         $record = $result->fetch_assoc();
         $this->chat_room_name = $record["name"];
-
-    }
-    function get_messages() {
-
-        $query = "SELECT owner_id, time_stamp, message_text FROM message WHERE chat_room_id='$this->id'";
-        $messages = array();
-        $mdb = $GLOBALS["mdb"];
+        $query = "SELECT id FROM message WHERE chat_room_id='$this->id'";
         $result = $mdb->query($query);
         if ($result->num_rows > 0 ) {
 
             while ($record = $result->fetch_assoc()) {
 
-                $index = array();
-                array_push($index, $record["owner_id"], $record["time_stamp"], $record["message_text"]);
-                array_push($messages, $index);
+                $index = new Message($record["id"]);
+                array_push($this->messages, $index);
 
             }
             
+
         }
-        return $messages;
+    }
+    function get_messages() {
+
+        return $this->messages;
         
     }
     function get_name() {
@@ -127,6 +130,35 @@ class Chat {
         $mdb->query($query);
     }
 
+}
+class Message {
+
+    private $id;
+    private $message_text;
+    private $time_stamp;
+
+    function __construct($id) {
+
+        $this->id = $id;
+        $mdb = $GLOBALS["mdb"];
+        $query = "SELECT message_text, time_stamp FROM message WHERE id='$this->id'";
+        $result = $mdb->query($query);
+        $record = $result->fetch_assoc();
+        $this->message_text = $record["message_text"];
+        $this->time_stamp = $record["time_stamp"];
+
+    }
+
+    function get_text() {
+
+        return $this->message_text;
+
+    }
+    function get_time_stamp() {
+
+        return $this->time_stamp;
+
+    }
 }
 
 ?>
