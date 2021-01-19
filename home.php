@@ -5,14 +5,7 @@ require 'mdb_connection.php';
 $mdb = mdb_connect();
 session_start();
 $current_user = $_SESSION['object'];
-//$current_user->create_chat_room("test5", "");
-//$current_user->create_chat_room("test6", "");
-//$current_user->create_chat_room("test7", "");
-//$current_user->create_chat_room("test8", "");
-//var_dump($chat_rooms);
-//$current_user->create_chat_room("test", "1234");
-$current_user->send_message("5", "I logged in");
-//$current_user->send_message("2", "hello?");
+session_destroy();
 
 ?>
 
