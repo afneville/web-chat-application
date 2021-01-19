@@ -169,9 +169,9 @@ class Message {
     function get_owner() {
 
         $mdb = $GLOBALS["mdb"];
-        $query = "SELECT owner_id FROM message WHERE id='$this->id'";
+        $query = "SELECT username FROM user WHERE id IN (SELECT owner_id FROM message WHERE id='$this->id')";
         $record = ($mdb->query($query))->fetch_assoc();
-        return $record["owner_id"];
+        return $record["username"];
     }
 
     function get_time_stamp() {

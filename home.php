@@ -44,9 +44,17 @@ for ($i = 0; $i < count($chat_rooms); $i++) {
 
 for ($i = 0; $i < count($chat_rooms); $i++) {
 
-    $name = $chat_rooms[$i]->get_name();
     echo "<div id=\"$i\" class=\"tabcontent\">";
-    echo var_dump($chat_rooms[$i]->get_messages());
+    //echo var_dump($chat_rooms[$i]->get_messages());
+    $messages = $chat_rooms[$i]->get_messages();
+    for ($x = 0; $x < count($messages); $x++) {
+
+        $message = $messages[$x];
+        echo "<p class=\"message_info\">".$message->get_owner()." ".$message->get_time_stamp()."</p>";
+        echo "<p class=\"message_text\">".$message->get_text()."</p>";
+
+    }
+    echo "</div>";
 
 }
 ?>
