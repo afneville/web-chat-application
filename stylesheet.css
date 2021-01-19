@@ -15,16 +15,17 @@ body {
 * {box-sizing: border-box}
 
 /* Style the tab */
-.tab_bar {
+.tab {
   float: left;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  width: 30%;
-  height: 300px;
+  width: 20%;
+  height: 400px;
+  overflow: auto;
 }
 
 /* Style the buttons that are used to open the tab content */
-.tab_bar button {
+.tab button {
   display: block;
   background-color: inherit;
   color: black;
@@ -38,21 +39,23 @@ body {
 }
 
 /* Change background color of buttons on hover */
-.tab_bar button:hover {
+.tab button:hover {
   background-color: #ddd;
 }
 
 /* Create an active/current "tab button" class */
-.tab_bar button.active {
+.tab button.active {
   background-color: #ccc;
 }
 
 /* Style the tab content */
-.chat_pane {
+.tabcontent {
   float: left;
   padding: 0px 12px;
   border: 1px solid #ccc;
   width: 70%;
   border-left: none;
   height: 300px;
+  display: none;
+  overflow: auto;
 }

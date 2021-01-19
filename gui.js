@@ -1,14 +1,20 @@
-function open_chat_room(evt, id) {
-  
-    var chat_pane = document.getElementsByClassName("chat_pane");
-    for ( var i = 0; i < chat_pane.length; i++) {
-        chat_pane[i].style.display = "none";
-    }
-    chat_name = document.getElementsByClassName("chat_name");
-    for (i = 0; i < chat_name.length; i++) {
-        chat_name[i].className = chat_name[i].className.replace(" active", "");
-    }
+function open_pane(evt, chat_room_index) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
 
-    document.getElementById(id).style.display = "block";
-    evt.currentTarget.className += " active";
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the link that opened the tab
+  document.getElementById(chat_room_index).style.display = "block";
+  evt.currentTarget.className += " active";
 }

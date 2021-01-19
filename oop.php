@@ -57,8 +57,8 @@ class User {
         $mdb = $GLOBALS["mdb"];
         $query = "INSERT INTO chat_room (name, pin) VALUES ('$chat_room_name', '$pin')";
         $mdb->query($query);
-        $id = $mdb->insert_id;
-        $query = "INSERT INTO chat_user (user_id, chat_room_id, priviliges) VALUES ('$this->id', '$id', '3')";
+        $chat_room_id = $mdb->insert_id;
+        $query = "INSERT INTO chat_user (user_id, chat_room_id, privileges) VALUES ('$this->id', '$chat_room_id', '3')";
         $mdb->query($query);
 
     } 

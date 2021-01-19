@@ -5,10 +5,13 @@ require 'mdb_connection.php';
 $mdb = mdb_connect();
 session_start();
 $current_user = $_SESSION['object'];
-$chat_rooms = $current_user->get_chat_rooms();
+$current_user->create_chat_room("test5", "");
+$current_user->create_chat_room("test6", "");
+$current_user->create_chat_room("test7", "");
+$current_user->create_chat_room("test8", "");
 //var_dump($chat_rooms);
 //$current_user->create_chat_room("test", "1234");
-//$current_user->send_message("1", "I logged in");
+$current_user->send_message("5", "I logged in");
 //$current_user->send_message("2", "hello?");
 
 ?>
@@ -27,26 +30,29 @@ $chat_rooms = $current_user->get_chat_rooms();
 <h1>Welcome to your home, <?php echo $current_user->get_username(); ?>.</h1>
 <h2>Your id is: <?php echo $current_user->get_id(); ?></h2>
 <h2>Your chats are: </h2>
+<div class="tab">
 <?php
 
+$chat_rooms = $current_user->get_chat_rooms();
 for ($i = 0; $i < count($chat_rooms); $i++) {
 
-    echo $chat_rooms[$i]->get_name()."</br>";
+    $name = $chat_rooms[$i]->get_name();
+    echo "<button class=\"tablinks\" onclick=\"open_pane(event, '$i')\">$name</button>";
 
 }
     
 ?>
-
-<div>
-<button class="chat_name" onclick="open_chat_room(event, '')"></button>
-<button class="chat_name" onclick="open_chat_room(event, '')"></button>
-<button class="chat_name" onclick="open_chat_room(event, '')"></button>
 </div>
+<?php
 
-<div id='' class='chat_pane'></div>
+for ($i = 0; $i < count($chat_rooms); $i++) {
 
+    $name = $chat_rooms[$i]->get_name();
+    echo "<div id=\"$i\" class=\"tabcontent\">";
+    echo var_dump($chat_rooms[$i]->get_messages());
 
-
+}
+?>
 
 </body>
 </html>
