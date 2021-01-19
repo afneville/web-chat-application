@@ -45,7 +45,7 @@
 
 <body>
         <div id="loginbox">
-                <h1>Sign up: </h1>
+                <h1>Login: </h1>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
 
                         <span class ="error"><?php echo "$error"; ?></span><br>
