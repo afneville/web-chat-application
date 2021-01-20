@@ -58,7 +58,8 @@ html, body {
   border-left: none;
   height: 100vh;
   display: none;
-  overflow: auto;
+  overflow: hidden;
+  padding-bottom: 30px;
 }
 .message_info {
 
@@ -70,3 +71,16 @@ html, body {
     color: black;
 }
 
+.messages {
+
+    height: 100%;
+    overflow: auto;
+
+}
+
+.new {
+
+    height: 30px;
+    position: absolute;
+    bottom: 0px;
+}
