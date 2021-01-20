@@ -15,8 +15,8 @@ session_destroy();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="stylesheet.css">
-    <script src="gui.js"></script>
+    <link rel="stylesheet" href="/php_chatter/resources/css/stylesheet.css">
+    <script src="/php_chatter/resources/js/gui.js"></script>
 </head>
 <body>
     

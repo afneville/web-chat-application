@@ -76,7 +76,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="stylesheet.css">
+  <link rel="stylesheet" href="/php_chatter/resources/css/stylesheet.css">
 </head>
 
 <body>
