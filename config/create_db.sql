@@ -1,4 +1,3 @@
-DROP DATABASE chatter;
 CREATE DATABASE chatter;
 USE chatter;
 CREATE TABLE user (id int(255) NOT NULL AUTO_INCREMENT, username varchar(255) UNIQUE NOT NULL, password varchar(255) NOT NULL, salt int(255) NOT NULL, last_online timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id)) ENGINE = InnoDB;
