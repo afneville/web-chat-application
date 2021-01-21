@@ -22,7 +22,6 @@ if (!isset($_SESSION['object'])){
     $current_user = $_SESSION["object"];
 }
 session_destroy();
-$current_user->create_chat_room("test", "");
 ?>
 
 <!DOCTYPE html>
