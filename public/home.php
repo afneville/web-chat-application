@@ -2,6 +2,7 @@
     
 require '../src/oop.php';
 require '../src/mdb_connection.php';
+
 $mdb = mdb_connect();
 session_start();
 if (!isset($_SESSION['object'])){
@@ -22,17 +23,26 @@ if (!isset($_SESSION['object'])){
     $current_user = $_SESSION["object"];
 }
 session_destroy();
-
+//$current_user->create_chat_room("test_1", "");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="/php_chatter/public/resources/css/home.css">
+    <title></title>
+    <link rel="stylesheet" href="resources/css/home.css">
+    <script src="resources/js/home.js"></script>
+
 </head>
 <body>
-    
+<?php
+
+require "../templates/top_bar.php";
+require "../templates/left_pane.php";
+require "../templates/right_pane.php";
+
+?>
 </body>
 </html>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php
 
-require "../src/top_bar.php";
 require "../src/oop.php";
 require "../src/mdb_connection.php";
 require "../src/sign_up_backend.php";
@@ -27,20 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/php_chatter/public/resources/css/stylesheet.css">
+  <link rel="stylesheet" href="resources/css/stylesheet.css">
 </head>
 
 <body>
-        <div id="loginbox">
-                <h1>Sign up: </h1>
-                <p class="error">* required fields</p>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-
-                        <input type="text" name="username" placeholder="Username"><span class="error"> * <?php echo $username_error;?></span></br>
-                        <input type="text" name="password" placeholder="Password"><span class="error"> * <?php echo $password_error;?></span></br>
-                        <input type="submit" value="sign up">
-
-                </form>
-        </div>
+<?php 
+require "../templates/top_bar.php";
+require "../templates/sign_up_template.php";
+?>
 </body>
 </html>
