@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 <?php 
-require "../templates/login_template.php";
 require "../templates/top_bar.php";
+require "../templates/login_template.php";
 ?>
 </body>
 </html
