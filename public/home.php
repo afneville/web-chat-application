@@ -22,17 +22,26 @@ if (!isset($_SESSION['object'])){
     $current_user = $_SESSION["object"];
 }
 session_destroy();
-
+//$current_user->create_chat_room("test_1", "");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="/php_chatter/public/resources/css/home.css">
+    <title></title>
+    <link rel="stylesheet" href="resources/css/home.css">
+    <script>src="resources/js/gui.js"</script>
+
 </head>
 <body>
-    
+<?php
+
+require "../src/top_bar.php";
+require "../src/left_pane.php";
+require "../src/right_pane.php";
+
+?>
 </body>
 </html>

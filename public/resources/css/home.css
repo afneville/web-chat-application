@@ -72,7 +72,7 @@ button.tablinks.active {
   width: 80%;
   border-left: none;
   height: 100%;
-  display: none;
+  display: block;
   overflow: hidden;
   padding-bottom: 30px;
 }
