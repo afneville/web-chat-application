@@ -2,6 +2,7 @@
     
 require '../src/oop.php';
 require '../src/mdb_connection.php';
+
 $mdb = mdb_connect();
 session_start();
 if (!isset($_SESSION['object'])){
@@ -32,15 +33,15 @@ session_destroy();
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="resources/css/home.css">
-    <script>src="resources/js/gui.js"</script>
+    <script src="resources/js/home.js"></script>
 
 </head>
 <body>
 <?php
 
-require "../src/top_bar.php";
-require "../src/left_pane.php";
-require "../src/right_pane.php";
+require "../templates/top_bar.php";
+require "../templates/left_pane.php";
+require "../templates/right_pane.php";
 
 ?>
 </body>
