@@ -100,7 +100,7 @@ class Chat {
 
         $mdb = $GLOBALS["mdb"];
         $messages = array();
-        $query = "SELECT id FROM message WHERE chat_room_id='$this->id'";
+        $query = "SELECT id FROM message WHERE chat_room_id='$this->id' ORDER BY time_stamp DESC LIMIT 100";
         $result = $mdb->query($query);
         if ($result->num_rows > 0) {
 

@@ -6,7 +6,8 @@ $chat_rooms = $current_user->get_chat_rooms();
 for ($i = 0; $i < count($chat_rooms); $i++) {
 
     $name = $chat_rooms[$i]->get_name();
-    echo "<button class=\"tablinks\" onclick=\"open_pane(event, '$i')\">$name</button>";
+    $current_room = $chat_rooms[$i]->get_id();
+    echo "<button class=\"tablinks\" onclick=\"open_pane(event, '$current_room')\">$name</button>";
 
 }
     
