@@ -40,7 +40,7 @@ function send_message_ajax(chat_room_id) {
 
 function fetch_messages(chat_room_id) {
 
-    if (chat_room_id === undefined) {
+    if (chat_room_id == null) {
 
         chat_room_id = active_id;
 
@@ -62,7 +62,53 @@ function fetch_messages(chat_room_id) {
     var objDiv = document.getElementById(chat_room_id).getElementsByClassName("messages")[0];
     objDiv.scrollTop = objDiv.scrollHeight;
 }
-function join_chat_room(){}
-function create_chat_room(){}
+
+function join_chat_room(){
+
+    var id = document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[0].value;
+    var pin = document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[1].value;
+    document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[0].value = "";
+    document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[1].value = "";
+    var xhr = new XMLHttpRequest();
+    var data = "join="+id+"###"+pin;
+
+    xhr.open('POST', 'process.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function(){
+
+        if (this.responseText == "0") {
+
+            alert("Incorrect join code or pin");
+
+        } else {
+
+            console.log(this.responseText);
+
+        }
+    }    
+    xhr.send(data);
+
+}
+function create_chat_room(){
+
+    var name = document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[0].value;
+    var pin = document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[1].value;
+    document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[0].value = "";
+    document.getElementsByClassName("left")[0].getElementsByClassName("chat_menu")[0].getElementsByTagName("input")[1].value = "";
+
+    var xhr = new XMLHttpRequest();
+    var data = "create="+name+"###"+pin;
+
+    xhr.open('POST', 'process.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function(){
+
+        console.log(this.responseText);
+        
+    }
+
+    xhr.send(data);
+
+}
     
 var update = setInterval(fetch_messages, 1000);

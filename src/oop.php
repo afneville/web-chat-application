@@ -60,6 +60,7 @@ class User {
         $chat_room_id = $mdb->insert_id;
         $query = "INSERT INTO chat_user (user_id, chat_room_id, privileges) VALUES ('$this->id', '$chat_room_id', '3')";
         $mdb->query($query);
+        return $chat_room_id;
 
     } 
 
@@ -152,6 +153,15 @@ class Chat {
 
         return $this->id;
     
+    }
+
+    function get_pin() {
+
+        $mdb = $GLOBALS["mdb"];
+        $query = "SELECT pin FROM chat_room WHERE id='$this->id'";
+        $record = ($mdb->query($query))->fetch_assoc();
+        return $record["pin"];
+
     }
 
     function get_members() {

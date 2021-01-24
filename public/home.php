@@ -2,7 +2,8 @@
     
 require '../src/oop.php';
 require '../src/mdb_connection.php';
-require '../src/message_backend.php';
+require '../src/chat_room_backend.php';
+require '../src/tab_backend.php';
 
 $mdb = mdb_connect();
 session_start();

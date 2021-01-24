@@ -1,8 +1,9 @@
 <?php
 
 require '../src/oop.php';
-require '../src/message_backend.php';
 require '../src/mdb_connection.php';
+require '../src/chat_room_backend.php';
+require '../src/tab_backend.php';
 
 $mdb = mdb_connect();
 
@@ -11,7 +12,7 @@ $current_user = new User($_SESSION["id"]);
 
 if (isset($_POST["send"])) {
 
-    $data = explode(",", $_POST["send"]);
+    $data = explode("###", $_POST["send"]);
     $timestamp = date("Y-m-d H:i:s");
     $current_user->send_message($data[0], $data[1], $timestamp);
     $current_user->set_last_online($data[0], $timestamp);
@@ -32,11 +33,31 @@ if (isset($_POST["fetch"])) {
 
 if (isset($_POST["create"])) {
 
+    $data = explode("###", $_POST["create"]);
+    $chat_room_id = $current_user->create_chat_room($data[0], $data[1]);
+    $chat_room = new Chat($chat_room_id);
+    render_room($chat_room);
+    echo "###";
+    render_tab($chat_room);
+
 
 }
 
 if (isset($_POST["join"])) {
 
+    $data = explode("###", $_POST["join"]);
+    $success = $current_user->join_chat_room($data[0], $data[1]);
+    if ($success) {
+
+        $chat_room = new Chat($data[0]);
+        render_room($chat_room);
+        echo "###";
+        render_tab($chat_room);
+        
+    } else {
+
+        echo "0";
+    }
 
 }
 ?>
