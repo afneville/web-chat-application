@@ -44,9 +44,9 @@ class User {
 
     }
 
-    function send_message($chat_room_id, $message_text) {
+    function send_message($chat_room_id, $message_text, $timestamp) {
 
-        $query = "INSERT INTO message (owner_id, chat_room_id, message_text) VALUES ('$this->id', '$chat_room_id', '$message_text')";
+        $query = "INSERT INTO message (owner_id, chat_room_id, message_text, time_stamp) VALUES ('$this->id', '$chat_room_id', '$message_text', '$timestamp')";
         $mdb = $GLOBALS["mdb"];
         $mdb->query($query);
 
@@ -84,6 +84,21 @@ class User {
         return $return_value;
 
     }
+    function set_last_online($chat_room_id, $timestamp) {
+
+        $mdb = $GLOBALS["mdb"];
+        $query = "UPDATE chat_user SET last_online='$timestamp' WHERE user_id='$this->id' AND chat_room_id='$chat_room_id'";
+        $mdb->query($query);
+
+    }
+    function get_last_online($chat_room_id) {
+
+        $mdb = $GLOBALS["mdb"];
+        $query = "SELECT last_online FROM chat_user WHERE user_id='$this->id' AND chat_room_id='$chat_room_id'";
+        $record = ($mdb->query($query))->fetch_assoc();
+        return $record["last_online"];
+
+    }
 
 }
 
@@ -96,11 +111,19 @@ class Chat {
         $this->id = $id;
 
     }
-    function get_messages() {
+    function get_messages($timestamp = null) {
 
         $mdb = $GLOBALS["mdb"];
         $messages = array();
-        $query = "SELECT id FROM message WHERE chat_room_id='$this->id' ORDER BY time_stamp DESC LIMIT 100";
+        if ($timestamp == null){
+            
+            $query = "SELECT id FROM message WHERE chat_room_id='$this->id' ORDER BY time_stamp DESC LIMIT 100";
+
+        } else {
+
+            $query = "SELECT id FROM message WHERE chat_room_id='$this->id' AND time_stamp>='$timestamp' ORDER BY time_stamp DESC";
+
+        }
         $result = $mdb->query($query);
         if ($result->num_rows > 0) {
 

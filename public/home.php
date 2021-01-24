@@ -2,6 +2,7 @@
     
 require '../src/oop.php';
 require '../src/mdb_connection.php';
+require '../src/message_backend.php';
 
 $mdb = mdb_connect();
 session_start();
@@ -23,7 +24,7 @@ if (!isset($_SESSION['id'])){
     $current_user = new User($_SESSION["id"]);
     $_SESSION["id"] = $current_user->get_id();
 }
-//$current_user->create_chat_room("test_1", "");
+//$current_user->create_chat_room("test", "");
 //$current_user->send_message("1", "I logged in.");
 ?>
 
@@ -45,7 +46,6 @@ require "../templates/right_pane.php";
 
 ?>
 
-<script src="resources/js/home.js"></script>
-<script src="resources/js/ajax.js"></script>
+<script src="resources/js/script.js"></script>
 </body>
 </html>
