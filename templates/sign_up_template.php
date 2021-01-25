@@ -6,6 +6,9 @@
 <input type="text" name="username" placeholder="Username"><span class="error"> * <?php echo $username_error;?></span></br>
 <input type="text" name="password" placeholder="Password"><span class="error"> * <?php echo $password_error;?></span></br>
 <input type="submit" value="sign up">
+<br>
+<br>
+<a href="login.php">log in</a>
 
 </form>
 </div>
