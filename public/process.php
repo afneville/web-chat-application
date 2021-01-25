@@ -36,9 +36,11 @@ if (isset($_POST["create"])) {
     $data = explode("###", $_POST["create"]);
     $chat_room_id = $current_user->create_chat_room($data[0], $data[1]);
     $chat_room = new Chat($chat_room_id);
+    render_tab($chat_room);
+    echo "###";
     render_room($chat_room);
     echo "###";
-    render_tab($chat_room);
+    echo $chat_room->get_id();
 
 
 }
@@ -50,9 +52,11 @@ if (isset($_POST["join"])) {
     if ($success) {
 
         $chat_room = new Chat($data[0]);
+        render_tab($chat_room);
+        echo "###";
         render_room($chat_room);
         echo "###";
-        render_tab($chat_room);
+        echo $chat_room->get_id();
         
     } else {
 
