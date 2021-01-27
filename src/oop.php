@@ -3,17 +3,18 @@
 class User {
     
     private $id;
+    private $mdb;
 
     function __construct($id) {
 
         $this->id = $id;
+        $this->mdb = $GLOBALS["mdb"];
     }
 
     function get_username() {
         
-        $mdb = $GLOBALS["mdb"];
         $query = "SELECT username FROM user WHERE id='$this->id'";
-        $record = ($mdb->query($query))->fetch_assoc();
+        $record = ($this->mdb->query($query))->fetch_assoc();
         return $record["username"];
         
     }
@@ -24,10 +25,9 @@ class User {
     }
     function get_chat_rooms() {
 
-        $mdb = $GLOBALS["mdb"];
         $chat_rooms= array();
         $query = "SELECT chat_room_id FROM chat_user WHERE user_id='$this->id'";
-        $result = $mdb->query($query);
+        $result = $this->mdb->query($query);
         if ($result->num_rows > 0 ) {
 
             while ($record = $result->fetch_assoc()) {
@@ -47,19 +47,17 @@ class User {
     function send_message($chat_room_id, $message_text, $timestamp) {
 
         $query = "INSERT INTO message (owner_id, chat_room_id, message_text, time_stamp) VALUES ('$this->id', '$chat_room_id', '$message_text', '$timestamp')";
-        $mdb = $GLOBALS["mdb"];
-        $mdb->query($query);
+        $this->mdb->query($query);
 
     }
 
     function create_chat_room($chat_room_name, $pin) {
 
-        $mdb = $GLOBALS["mdb"];
         $query = "INSERT INTO chat_room (name, pin) VALUES ('$chat_room_name', '$pin')";
-        $mdb->query($query);
-        $chat_room_id = $mdb->insert_id;
+        $this->mdb->query($query);
+        $chat_room_id = $this->mdb->insert_id;
         $query = "INSERT INTO chat_user (user_id, chat_room_id, privileges) VALUES ('$this->id', '$chat_room_id', '3')";
-        $mdb->query($query);
+        $this->mdb->query($query);
         return $chat_room_id;
 
     } 
@@ -68,15 +66,14 @@ class User {
         
         $return_value = false;
         $query = "SELECT pin FROM chat_room WHERE id='$chat_room_id'";
-        $mdb = $GLOBALS["mdb"];
-        $result = $mdb->query($query);
+        $result = $this->mdb->query($query);
         if ($result->num_rows > 0){
 
             $record = $result->fetch_assoc();
             if ($record["pin"] == $pin){
 
                 $query = "INSERT INTO chat_user (user_id, chat_room_id) VALUES ('$this->id', '$chat_room_id')";
-                $mdb->query($query);
+                $this->mdb->query($query);
                 $return_value = true;
             }
 
@@ -87,16 +84,14 @@ class User {
     }
     function set_last_online($chat_room_id, $timestamp) {
 
-        $mdb = $GLOBALS["mdb"];
         $query = "UPDATE chat_user SET last_online='$timestamp' WHERE user_id='$this->id' AND chat_room_id='$chat_room_id'";
-        $mdb->query($query);
+        $this->mdb->query($query);
 
     }
     function get_last_online($chat_room_id) {
 
-        $mdb = $GLOBALS["mdb"];
         $query = "SELECT last_online FROM chat_user WHERE user_id='$this->id' AND chat_room_id='$chat_room_id'";
-        $record = ($mdb->query($query))->fetch_assoc();
+        $record = ($this->mdb->query($query))->fetch_assoc();
         return $record["last_online"];
 
     }
